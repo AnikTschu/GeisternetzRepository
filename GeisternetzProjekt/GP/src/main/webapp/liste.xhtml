@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+  <link rel="stylesheet" type="text/css" media="screen" href="style.css"/>
+  <title>Liste</title>
+</h:head>
+
+<h:body>
+  <header>	
+   	 
+   	 <a href="index.xhtml">
+   	 <img src="images/Logo_blau.png" alt="logo" width="120" title="Zurück zur Startseite"/>
+   	 </a>
+   	 
+   	 <a href="neuemeldung.xhtml">
+   	 	<button class="btn">
+   	 	Ein neues Geisternetz melden!
+   	 	</button>
+   	 </a>
+
+   	 <a>
+   	 	<button class="btn_a">
+   	 	Liste aller gemeldeten Geisternetze ansehen
+   	 	</button>
+   	 </a>
+   </header>
+              
+  <h1>Liste aller gemeldeten Geisternetze</h1>
+
+	<p>
+	  	<b>Wichtiger Hinweis!</b><br />
+	  	Ist bei einem Netz bereits ein Datum unter "Bergung bevorstehend", "Geborgen am" oder "Als verschollen gemeldet am" 
+	  	eingetragen, so gibt es bereits eine Person, die sich dafür eingetragen hat bzw. dies gemeldet hat. Bitte überschreibe dann nicht das Datum. 
+	  	Aus Datenschutzgründen zeigen wir nicht die Daten der meldenden oder bergenden Person an. Solltest du Kontakt mit einer Person aufnehmen wollen, die 
+	  	einem Geisternetz zugeordnet ist, wende dich bitte an <b><em>Absprache_Shea-Sepherrd@web.de </em></b><br />
+	</p>
+    
+<h:form>
+
+ 	<button class="btn">
+	<h:commandLink 	id="zumEditiermodus" value="Editieren" 
+ 					action="#{geisternetzController.edit}"/> 
+ 	</button>
+
+  <p:dataTable var="Geisternetz" value="#{liste.netzliste}"
+  			rowClasses="ungerade, gerade"
+  			columnClasses="nr"
+  			class="data_table"
+  			id="dataTableGeisternetze">
+  		
+       		<p:column>
+      			<f:facet name="edit">Editieren</f:facet>
+      				<h:commandLink 	id="diesesGeisternetzEditieren" value="Editieren" 
+ 					action="#{geisternetzController.bearbeiteDiesesGeisternetz(Geisternetz.id)}"/> 
+      		</p:column>  		
+  		
+       		<p:column sortBy="#{Geisternetz.breitengrad}">
+      			<f:facet name="header">Breitengrad</f:facet>
+      			<h:outputText value="#{Geisternetz.breitengrad}">
+      				 <f:convertNumber pattern="00.000000" locale="en"/>
+      			</h:outputText>
+      		</p:column>    			
+  			
+       		<p:column sortBy="#{Geisternetz.laengengrad}">
+      			<f:facet name="header">Längengrad</f:facet>
+      			<h:outputText value="#{Geisternetz.laengengrad}">
+      				 <f:convertNumber pattern="000.000000" locale="en"/>
+      			</h:outputText>
+      		</p:column>    			
+
+      		<p:column sortBy="#{Geisternetz.groesse}">
+      			<f:facet name="header">Größe (in km)</f:facet>
+      			<h:outputText value="#{Geisternetz.groesse}"/>
+      		</p:column>    	
+  			
+       		<p:column sortBy="#{Geisternetz.status}">
+      			<f:facet name="header">Status</f:facet>
+      			<h:outputText value="#{Geisternetz.status}"/>
+      		</p:column>
+
+       		<p:column sortBy="#{Geisternetz.erfassungsdatum}">
+      			<f:facet name="header">Erfasst am</f:facet>
+      			<h:outputText value="#{Geisternetz.erfassungsdatum}">
+      				<f:convertDateTime type="date" pattern="dd-MM-yyyy" timeZone="Europe/Berlin"/>
+      			</h:outputText>
+      		</p:column>  
+      		
+       		<p:column sortBy="#{Geisternetz.bergungsdatum}">
+      			<f:facet name="header">Bergung geplant am</f:facet>
+      			<h:outputText value="#{Geisternetz.bergungsdatum}">
+      				<f:convertDateTime type="date" pattern="dd-MM-yyyy" timeZone="Europe/Berlin"/>
+      			</h:outputText>
+      		</p:column>  
+      		
+       		<p:column sortBy="#{Geisternetz.geborgendatum}">
+      			<f:facet name="header">Geborgen am</f:facet>
+      			<h:outputText value="#{Geisternetz.geborgendatum}">
+      				<f:convertDateTime type="date" pattern="dd-MM-yyyy" timeZone="Europe/Berlin"/>
+      			</h:outputText>
+      		</p:column>
+      		
+       		<p:column sortBy="#{Geisternetz.verschollendatum}">
+      			<f:facet name="header">Als verschollen gemeldet am</f:facet>
+      			<h:outputText value="#{Geisternetz.verschollendatum}">
+      				<f:convertDateTime type="date" pattern="dd-MM-yyyy" timeZone="Europe/Berlin"/>
+      			</h:outputText>
+      		</p:column>
+      		      		        		      		    		     		      		     
+  </p:dataTable> 
+
+		
+</h:form>
+
+  <p id="fussnote">Erster Entwurf!</p>
+</h:body>
+
+</html>
+

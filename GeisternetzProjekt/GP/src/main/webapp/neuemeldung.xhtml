@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+      
+<h:head>
+  <link rel="stylesheet" type="text/css" media="screen" href="style.css"/>
+  <title>Neue Meldung</title>
+</h:head>
+
+<h:body>
+	<header>
+	
+	  <span>
+	    <a href="index.xhtml">
+	      <img src="images/Logo_blau.png" alt="logo" width="120" title="Zurück zur Startseite" />
+	    </a>
+	  </span>
+	
+	  <span>
+	      <button class="btn_a">
+	        Ein neues Geisternetz melden!
+	      </button>
+	  </span>
+	
+	  <h:form>
+	    <h:commandButton id="alleGeisternetzeLaden"
+	                     value="Liste aller gemeldeten Geisternetze ansehen"
+	                     action="#{geisternetzController.ladeListe}"
+	                     styleClass="btn" />
+	  </h:form>
+	
+	</header>
+              
+  <h1>Ein neues Geisternetz melden!</h1>
+  <h2>Hier kannst du neue Geisternetze melden</h2>
+    
+  	<p> Um ein neues Geisternetz zu melden, fülle bitte das Formular aus.
+  	<br/><br/>
+  	Möchtest du anonym bleiben? Dann lass einfach die Felder mit den privaten Daten aus!
+ 	 * kennzeichnet die Pflichtfelder.
+ 	 Solltest Du Dich bei Deinen persönlichen Angaben verschrieben haben, mach Dir keine Sorgen! Schick uns eine Mail an 
+	 <b><em>Datenschutz_Shea-Sepherrd@web.de </em></b> und wir kümmern uns schnellstmöglich um Deine Anfrage!
+ 	 <br/><br/>
+ 	 Du fragst Dich, warum Du 6 Nachkommastellen beim Breiten- und Längengrad angeben sollst? 
+ 	 Damit erleichterst Du das Finden des Geisternetzes, falls eine Person sich dazu bereit erklärt, das Netz zu bergen.
+ 	 Angaben, die so präzise wie möglich sind, helfen allen die helfen wollen!
+	</p>
+
+  <h2>Deine Daten:</h2>
+  
+	<h:form>
+	<p:messages id="messages" globalOnly="true" showDetail="true"/>
+ 	 
+ 	   <h:panelGrid columns="2">
+  			 
+      		<h:panelGroup>
+ 			<b>Name:</b>
+ 			<br/>
+ 			Bitte Format einhalten. Z.B.: FischerMeerle
+ 			</h:panelGroup>
+ 			
+   			<h:panelGroup>
+   				<h:inputText 	id="name" size="20" 
+   								value="#{personController.neueMeldendePerson.name}"
+   								validatorMessage="Bitte geben Sie einen Namen ohne Leerzeichen ein.">
+   				</h:inputText>
+   				<h:message for="name" styleClass="error"/>
+			</h:panelGroup>
+      		
+      		<h:panelGroup>
+ 			<b>Telefonnummer:</b>
+ 			<br/>
+ 			Bitte Format einhalten. Z.B.: +49 1661233456 oder 0049 166123456
+ 			</h:panelGroup>
+ 			
+   			<h:panelGroup>
+   				<h:inputText 	id="telefonnr" size="20" 
+   								value="#{personController.neueMeldendePerson.telefonnr}"/>
+			</h:panelGroup>
+      		
+      </h:panelGrid> 
+
+
+ <h2>Informationen zum Geisternetz:</h2>
+ 
+
+ 	   <h:panelGrid columns="2">
+ 
+ 			<h:panelGroup>
+ 			<b>Breitengrad*:</b>
+ 			<br/>
+ 			Bitte Format einhalten. Z.B.: 46.235197, geben Sie also bitte 6 Nachkommastellen an.
+ 			</h:panelGroup>
+ 			
+   			<h:panelGroup>
+   				<h:inputText 	id="breitengrad" size="20" required="true"
+   								value="#{geisternetzController.neuesGeisternetz.breitengrad}">
+   					<f:convertNumber locale="en_US" pattern="#0.000000"/>
+   					<f:validateDoubleRange minimum="-90.0" maximum="90.0" />
+   				</h:inputText>
+				<p:message 	for="breitengrad" styleClass="error" autoUpdate="true"/>
+			</h:panelGroup>
+			
+ 			<h:panelGroup>
+ 			<b>Längengrad*:</b>
+ 			<br/>
+ 			Bitte Format einhalten. Z.B.: 008.235197, geben Sie also bitte 6 Nachkommastellen an.
+ 			</h:panelGroup>
+ 			
+      		<h:panelGroup>	
+      			<h:inputText 	id="laengengrad" size="20" required="true"
+      							value="#{geisternetzController.neuesGeisternetz.laengengrad}">
+      				<f:convertNumber locale="en_US" pattern="#0.000000"/>
+      				<f:validateDoubleRange minimum="-180.0" maximum="180.0" />
+      				</h:inputText>
+      			<p:message 	for="laengengrad" styleClass="error" autoUpdate="true"/>
+			</h:panelGroup>
+			
+      		<h:panelGroup>
+ 			<b>Größe*:</b>
+ 			<br/>
+ 			geschätzt, in km.
+ 			</h:panelGroup>
+
+      		<h:panelGroup>
+      			<h:inputText 	id="groesse" size="20" required="true" label="Größe"
+      							value="#{geisternetzController.neuesGeisternetz.groesse}">
+      				<f:convertNumber/>
+      				<f:validateLongRange minimum="1" />
+      			</h:inputText>
+          		<p:message 	for="groesse" styleClass="error" autoUpdate="true"/>
+          	</h:panelGroup>
+      		      		
+      </h:panelGrid> 
+	
+	  <h:commandButton 	id="alleDatenSpeichernMitMeldenderPerson" value="Alle Daten speichern!" 
+ 						action="#{alleDatenController.speichereAlleDatenMitMeldenderPerson}"/> 
+ 				
+	</h:form>	
+	
+	<div class="footer">
+    <p>
+    <h:outputText value="#{anschrift.name}"/>
+    <br/>
+    <h:outputText value="#{anschrift.strasse} #{anschrift.hausnummer}"/>
+    <br/>
+    <h:outputText value="#{anschrift.plz} #{anschrift.ort}"/>
+    <br/>
+    <h:outputText value="#{anschrift.land}"/>
+    </p>
+    </div>
+    <p id="fussnote">Erster Entwurf!</p>
+    
+</h:body>
+
+</html>
+
